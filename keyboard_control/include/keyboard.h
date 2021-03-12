@@ -1,3 +1,6 @@
+#ifndef UINITREE_A1_ROS2_EXAMPLES_KEYBOARD_H
+#define UINITREE_A1_ROS2_EXAMPLES_KEYBOARD_H
+
 #include <termios.h>
 #include <signal.h>
 #include <stdio.h>
@@ -52,15 +55,18 @@ enum SetCmd{
 
 class KeyBoard {
 public:
-    KeyBoard():kfd(0),pub(){
-
-    }
-    PubNode pub;
-    void keyboardLoop();
+    KeyBoard();
     void freeKeyBoard();
-    private:
+    char readKey();
+private:
     int kfd;
     struct termios cooked = {0};
     struct termios raw = {0};
     struct pollfd ufd = {0};
+
+    char c;
+    bool dirty;
+    int rcv_num;
 };
+
+#endif
